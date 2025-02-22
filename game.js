@@ -204,7 +204,8 @@ $hxClasses.ApplicationMain = ApplicationMain, ApplicationMain.__name__ = ["Appli
 	}
 	if(lime_Assets.initialize(), e) Reflect.callMethod(t, Reflect.field(t, "main"), []);
 	else Type.createInstance(DocumentClass, []);
-	openfl_Lib.current.stage.window.__fullscreen && openfl_Lib.current.stage.dispatchEvent(new openfl_events_FullScreenEvent("fullScreen", !1, !1, !0, !0)), openfl_Lib.current.stage.dispatchEvent(new openfl_events_Event("resize", !1, !1))
+	openfl_Lib.current.stage.window.__fullscreen && openfl_Lib.current.stage.dispatchEvent(new openfl_events_FullScreenEvent("fullScreen", !1, !1, !0, !0)), openfl_Lib.current.stage.dispatchEvent(new openfl_events_Event("resize", !1, !1));
+	
 };
 
 var openfl_events_IEventDispatcher = function () {};
@@ -1049,7 +1050,8 @@ var Main = function () {
 
 $hxClasses.Main = Main, Main.__name__ = ["Main"], Main.current = null;
 Main.main = function () {
-	Main.created || (openfl_Lib.current.stage.align = 6, openfl_Lib.current.stage.scaleMode = 2, openfl_Lib.current.addChildAt(new Main, 0), Main.created = !0, Preloader.remove())
+	Main.created || (openfl_Lib.current.stage.align = 6, openfl_Lib.current.stage.scaleMode = 2, openfl_Lib.current.addChildAt(new Main, 0), Main.created = !0, Preloader.remove());
+	
 }, Main.__super__ = openfl_display_Sprite, Main.prototype = $extend(openfl_display_Sprite.prototype, {
 	inited: null,
 	isFpsEnabled: null,
@@ -1101,7 +1103,9 @@ Main.main = function () {
 	},
 	fullStop: null,
 	set_fullStop: function (e) {
-		return this.fullStop = e, e
+		//return this.fullStop = e, e
+		//console.log(e);
+		return e;
 	},
 	wasMuted: null,
 	wasMuted1: null,
@@ -3479,7 +3483,6 @@ var FinishScreen = function (e, t) {
 	var l = this.addTextField("Aalgrs", 50, 14007173, !1, "CENTER", 0, this.sHeight / 1.9 + 65, this.sWidth),
 		_ = Math.floor((new Date).getTime() / 1e3) - Desk.current.startTime,
 		a = Math.floor(_ / 60 / 60);
-		l.set_textColor(4662531);
 	_ -= 60 * a * 60;
 	var r = Math.floor(_ / 60);
 	_ -= 60 * r;
@@ -3661,28 +3664,7 @@ $hxClasses.InformWindow = InformWindow, InformWindow.__name__ = ["InformWindow"]
 });
 
 var IngameMenu = function () {
-	this.lastTakens2Arr = [], this.lastTakens1Arr = [], this.takensNames = new haxe_ds_ObjectMap, this.takensPool = new haxe_ds_StringMap, this.portraitInitX = 0,
-	this.landscapeInitY = 0, Menu.call(this), this.mainBatch = this.main.batch, this.higlitedBmd = this.getBitmapData("plashka1"),
-	 this.noHiglitBmd = this.getBitmapData("plashka2"), this.player1PanelCont = this.getSprite(), this.player2PanelCont = this.getSprite(),
-	  this.player1Panel = new openfl_display_Bitmap(this.noHiglitBmd, 1, !0), this.player2Panel = new openfl_display_Bitmap(this.noHiglitBmd, 1, !0),
-	   this.player1PanelCont.addChild(this.player1Panel), this.player2PanelCont.addChild(this.player2Panel), this.player1PanelCont.set_x(this.sWidth / 2),
-	   this.player2PanelCont.set_x(this.sWidth / 2), this.player1PanelCont.set_y(this.sHeight / 2 - 320 - 50),
-	    this.player2PanelCont.set_y(this.sHeight / 2 + 320 + 50), this.pcBmd = this.getBitmapData("comp"), this.playerBmd = this.getBitmapData("onePlaier1"),
-	    this.player1TypeIcon = this.getSprite(), this.player2TypeIcon = this.getSprite(), this.player1PanelCont.addChild(this.player1TypeIcon),
-	    this.player2PanelCont.addChild(this.player2TypeIcon), this.player1TypeIcon.set_x(50), this.player2TypeIcon.set_x(50),
-	     this.player1TypeIcon.set_y(this.player1Panel.get_height() / 2), this.player2TypeIcon.set_y(this.player1Panel.get_height() / 2),
-	      this.player1Icon = this.getBimap("onePlaier1", null, this.player1TypeIcon), this.player1Icon.set_x(-this.player1Icon.get_width() / 2),
-	       this.player1Icon.set_y(-this.player1Icon.get_height() / 2), this.player2Icon = this.getBimap("onePlaier1", null, this.player2TypeIcon),
-	       this.player2Icon.set_x(-this.player2Icon.get_width() / 2), this.player2Icon.set_y(-this.player2Icon.get_height() / 2),
-	        this.player1NumTxt = new NumFontFromBatch(this.mainBatch, "dig_"), this.player1NumTxt.set_text("0"),
-	        this.player1NumTxt.set_x(this.player1Icon.get_x() + this.player1Icon.get_width() ),
-	         this.player1NumTxt.set_y(this.player1Icon.get_y() + this.player1Icon.get_height() / 2 - this.player1NumTxt.get_height() / 2),
-	         this.player1TypeIcon.addChild(this.player1NumTxt), this.player2NumTxt = new NumFontFromBatch(this.mainBatch, "dig_"),
-	         this.player2NumTxt.set_text("0"), this.player2NumTxt.set_x(this.player2Icon.get_x() + this.player2Icon.get_width() ),
-	          this.player2NumTxt.set_y(this.player2Icon.get_y() + this.player2Icon.get_height() / 2 - this.player2NumTxt.get_height() / 2),
-	          this.player2TypeIcon.addChild(this.player2NumTxt), this.player1Takens = this.getSprite(), this.player2Takens = this.getSprite(),
-	          this.undoBtnCont = new openfl_display_Sprite, this.menuBtnCont = new openfl_display_Sprite, this.player1PanelCont.addChild(this.menuBtnCont),
-	          this.player2PanelCont.addChild(this.undoBtnCont);
+	this.lastTakens2Arr = [], this.lastTakens1Arr = [], this.takensNames = new haxe_ds_ObjectMap, this.takensPool = new haxe_ds_StringMap, this.portraitInitX = 0, this.landscapeInitY = 0, Menu.call(this), this.mainBatch = this.main.batch, this.higlitedBmd = this.getBitmapData("plashka1"), this.noHiglitBmd = this.getBitmapData("plashka2"), this.player1PanelCont = this.getSprite(), this.player2PanelCont = this.getSprite(), this.player1Panel = new openfl_display_Bitmap(this.noHiglitBmd, 1, !0), this.player2Panel = new openfl_display_Bitmap(this.noHiglitBmd, 1, !0), this.player1PanelCont.addChild(this.player1Panel), this.player2PanelCont.addChild(this.player2Panel), this.player1PanelCont.set_x(this.sWidth / 2), this.player2PanelCont.set_x(this.sWidth / 2), this.player1PanelCont.set_y(this.sHeight / 2 - 320 - 50), this.player2PanelCont.set_y(this.sHeight / 2 + 320 + 50), this.pcBmd = this.getBitmapData("comp"), this.playerBmd = this.getBitmapData("onePlaier1"), this.player1TypeIcon = this.getSprite(), this.player2TypeIcon = this.getSprite(), this.player1PanelCont.addChild(this.player1TypeIcon), this.player2PanelCont.addChild(this.player2TypeIcon), this.player1TypeIcon.set_x(50), this.player2TypeIcon.set_x(50), this.player1TypeIcon.set_y(this.player1Panel.get_height() / 2), this.player2TypeIcon.set_y(this.player1Panel.get_height() / 2), this.player1Icon = this.getBimap("onePlaier1", null, this.player1TypeIcon), this.player1Icon.set_x(-this.player1Icon.get_width() / 2), this.player1Icon.set_y(-this.player1Icon.get_height() / 2), this.player2Icon = this.getBimap("onePlaier1", null, this.player2TypeIcon), this.player2Icon.set_x(-this.player2Icon.get_width() / 2), this.player2Icon.set_y(-this.player2Icon.get_height() / 2), this.player1NumTxt = new NumFontFromBatch(this.mainBatch, "dig_"), this.player1NumTxt.set_text("0"), this.player1NumTxt.set_x(this.player1Icon.get_x() + this.player1Icon.get_width() - 8), this.player1NumTxt.set_y(this.player1Icon.get_y() + this.player1Icon.get_height() / 2 - this.player1NumTxt.get_height() / 2), this.player1TypeIcon.addChild(this.player1NumTxt), this.player2NumTxt = new NumFontFromBatch(this.mainBatch, "dig_"), this.player2NumTxt.set_text("0"), this.player2NumTxt.set_x(this.player2Icon.get_x() + this.player2Icon.get_width() - 8), this.player2NumTxt.set_y(this.player2Icon.get_y() + this.player2Icon.get_height() / 2 - this.player2NumTxt.get_height() / 2), this.player2TypeIcon.addChild(this.player2NumTxt), this.player1Takens = this.getSprite(), this.player2Takens = this.getSprite(), this.undoBtnCont = new openfl_display_Sprite, this.menuBtnCont = new openfl_display_Sprite, this.player1PanelCont.addChild(this.menuBtnCont), this.player2PanelCont.addChild(this.undoBtnCont);
 	var e = this.getBimap("undo_1", $bind(this, this.undo), this.undoBtnCont);
 	e.set_x(-e.get_width() / 2), e.set_y(-e.get_height() / 2), this.undoBtnCont.set_x(this.player2Panel.get_width() - e.get_width() / 2 - 15), this.undoBtnCont.set_y(this.player2Panel.get_height() / 2 - 2);
 	var t = this.getBimap("menu_1", $bind(this, this.menuClick), this.menuBtnCont);
@@ -3690,7 +3672,7 @@ var IngameMenu = function () {
 	for(var n = 0, l = this.player1PanelCont.get_numChildren(); n < l;) {
 		var _ = n++,
 			a = this.player1PanelCont.getChildAt(_);
-		a.set_x(a.get_x() - (this.player1Panel.get_width() / 2));
+		a.set_x(a.get_x() - this.player1Panel.get_width() / 2);
 		var r = this.player1PanelCont.getChildAt(_);
 		r.set_y(r.get_y() - this.player1Panel.get_height() / 2)
 	}
@@ -3755,7 +3737,7 @@ $hxClasses.IngameMenu = IngameMenu, IngameMenu.__name__ = ["IngameMenu"], Ingame
 		if(null != Desk.current.state) {
 			for(; this.player1Takens.get_numChildren() > 0;) this.sendToPoolTakensGraphic(this.player1Takens.removeChildAt(0));
 			for(; this.player2Takens.get_numChildren() > 0;) this.sendToPoolTakensGraphic(this.player2Takens.removeChildAt(0));
-			var e, t, n, l, _ = e = this.isLandscape ? 25 : 120,
+			var e, t, n, l, _ = e = this.isLandscape ? 25 : 170,
 				a = t = this.isLandscape ? 85 : 25;
 			n = 37 + (this.isLandscape ? 8 : 0), l = this.isLandscape ? 2 : 8;
 			for(var r, i = Desk.current.state.taken[0], s = 0, o = i.length; s < o;) {
@@ -3864,38 +3846,28 @@ $hxClasses.Localization = Localization, Localization.__name__ = ["Localization"]
 
 var MainMenu = function () {
 	gradle.event("SCREEN_HOME"), this.bgsArr = [], Menu.call(this), this.mainBatch = this.main.batch, this.bgsSpr = this.getSprite(), this.createBgs();
-	var physicalScreenHeight = 1280;
-	 console.log("Height:_physicalScreenHeight_"+physicalScreenHeight);
-	 console.log("Height:_ this.main.sHeight_"+ this.get_height());
+	
 	var e = this.getSprite(),
 		t = this.getBimap("logo", null, e);
 	t.set_x(this.sWidth / 2 - t.get_width() / 2);
-//	t.set_y(physicalScreenHeight/2 -t.get_height()/2 -500);
-	t.set_y(-10);
-
-    console.log("Height:_"+this.sHeight);
-    console.log("Height_w:_"+this.sWidth);
-    console.log("t.get_height():_"+t.get_height());
+	
 	var n = t.get_height() + 100;
-
 	if(gradle.position.home.one_player.enabled){
 		var l = this.getBimap("one_plaier", $bind(this, this.onePlayerClick), e);  //one player
-		l.set_x(this.sWidth / 2 - l.get_width()/2);
-//		l.set_y(((physicalScreenHeight/2) -( l.get_height()/2))-250);
-		l.set_y(t.get_height()+0);
+		l.set_x(this.sWidth / 2 - l.get_width()/2 + gradle.position.home.one_player.x);
+		l.set_y(t.get_height() - l.get_height()/2 - 58 + 200 + gradle.position.home.one_player.y);
 	}
 	
 	if(gradle.position.home.two_players.enabled){
 		var _ = this.getBimap("2_plaiers", $bind(this, this.twoPlayerClick), e); //two playeres
-		_.set_x(this.sWidth / 2 - _.get_width()/2);
-		_.set_y(t.get_height()+120);
+		_.set_x(this.sWidth / 2 - _.get_width()/2 + gradle.position.home.two_players.x);
+		_.set_y(t.get_height() - _.get_height()/2 - 58 + 200 + gradle.position.home.two_players.y);
 	}
 	
 	if(gradle.position.home.resume.enabled){
 		var a = this.getBimap("load_a", $bind(this, this.load), e);  //resume
-		a.set_x(this.sWidth / 2 - a.get_width()/2);
-//		a.set_y(physicalScreenHeight/2 - a.get_height()/2 );
-		a.set_y(t.get_height()+240 );
+		a.set_x(this.sWidth / 2 - a.get_width()/2 + gradle.position.home.resume.x);
+		a.set_y(t.get_height() - a.get_height()/2 - 58 + 200 + gradle.position.home.resume.y);
 	}
 	/*
 	if(gradle.position.home.options.enabled){
@@ -3908,11 +3880,24 @@ var MainMenu = function () {
 	if(gradle.position.home.sound.enabled){
 		this.sndBtn = this.getBimap("sound", $bind(this, this.soundClick), e);
 		this.sndBtnOff = this.getBimap("sounds_off", $bind(this, this.soundClick), e);
-		this.sndBtn.set_x(this.sndBtnOff.set_x(this.sWidth / 2 - this.sndBtn.get_width()/2 ));
-//		this.sndBtn.set_y(this.sndBtnOff.set_y(physicalScreenHeight/2 - this.sndBtn.get_height()/2 +200));
-		this.sndBtn.set_y(this.sndBtnOff.set_y(t.get_height()+360));
+		this.sndBtn.set_x(this.sndBtnOff.set_x(this.sWidth / 2 - this.sndBtn.get_width()/2 + gradle.position.home.sound.x));
+		this.sndBtn.set_y(this.sndBtnOff.set_y(t.get_height() - this.sndBtn.get_height()/2 - 58 + 200 + gradle.position.home.sound.y));
 		this.updateSoundBtn();
 	}
+	
+	
+	if(gradle.position.home.more_games.enabled){
+		this.moreBtn = this.getBimap("more_games", function(){ gradle.event('btn_more'); }, e);
+		this.moreBtn.set_x(this.sWidth / 2 - this.moreBtn.get_width()/2 + gradle.position.home.more_games.x);
+		this.moreBtn.set_y(t.get_height() - this.moreBtn.get_height()/2 - 58 + 200 + gradle.position.home.more_games.y);
+	}
+	
+	if(gradle.position.home.share.enabled){
+		this.shareBtn = this.getBimap("share", function(){ gradle.event('btn_share'); }, e);
+		this.shareBtn.set_x(this.sWidth / 2 - this.shareBtn.get_width()/2 + gradle.position.home.share.x);
+		this.shareBtn.set_y(t.get_height() - this.shareBtn.get_height()/2 - 58 + 200 + gradle.position.home.share.y);
+	}
+	
 	this.isImagesFromAtlas = !1;
 	
 	this.isImagesFromAtlas = !0, e.set_y(this.sHeight / 2 - e.get_height() / 2), this.moveThisOnResize = !0, this.moveByResizeCallBack = $bind(this, this.onResize);
@@ -4561,10 +4546,9 @@ $hxClasses.PauseMenu = PauseMenu, PauseMenu.__name__ = ["PauseMenu"], PauseMenu.
 		}).ease(motion_easing_Quad.get_easeOut()).onComplete($bind(this, this.close))), this.isFromMainMenu || (Desk.current.updateChesses(), Main.current.ingameMenu.onResize())
 	},
 	soundClick: function () {
-		this.main.sounds.muted ? this.main.unMute() : this.main.mute(), gradle.event("EVENT_VOLUMECHANGE", {
-			bgmVolume: this.main.sounds.muted ? 0 : 1,
-			sfxVolume: this.main.sounds.muted ? 0 : 1
-		}), this.updateSoundBtn()
+		this.main.sounds.muted ? this.main.unMute() : this.main.mute(), 
+		gradle.event("EVENT_VOLUMECHANGE"+(this.main.sounds.muted?0:1)),
+		this.updateSoundBtn()
 	},
 	updateSoundBtn: function () {
 		this.main.sounds.muted ? (this.sndBtnOff.set_alpha(1), this.sndBtn.set_alpha(0)) : (this.sndBtnOff.set_alpha(0), this.sndBtn.set_alpha(1))
@@ -4640,7 +4624,6 @@ var PlayMenu = function (e) {
 	
 	var t = this.getBimap("brain", null, this.mainCont);
 	t.set_x(this.sWidth / 2 - t.get_width() / 2);
-	t.set_y(-50);
 	var n = this.getBimap("arrowBot1_copy", $bind(this, this.minDiff), this.mainCont),
 		l = this.getBimap("arrowUp1_copy", $bind(this, this.plusDiff), this.mainCont);
 	n.set_x(this.sWidth / 2 - n.get_width() - 27);
@@ -5293,16 +5276,11 @@ var SaveLoadWindow = function (e) {
 		var r = a++;
 		(t = this.getBimap("plashka_Ba_1", null, this.mainCont)).set_x(17), t.set_y(_), n = new SaveSlot(!0), this.mainCont.addChild(n), n.set_x(17), n.set_y(_), _ += t.get_height() - 3, 0 != r && t.set_visible(!1), this.highlights.push(t), this.slots.push(n)
 	}
-	this.saveBtn = this.getBimap("Back-save", $bind(this, this.saveClick), this.mainCont), this.loadBtn = this.getBimap("Back-play", $bind(this, this.loadClick), this.mainCont);
-	var i = this.getBimap("Back-002", $bind(this, this.backClick), this.mainCont);
-//    i.set_x(this.sHeight - this.i.get_height() - 50);
+	this.saveBtn = this.getBimap("save", $bind(this, this.saveClick), this.mainCont), this.loadBtn = this.getBimap("load_a", $bind(this, this.loadClick), this.mainCont);
+	var i = this.getBimap("Back-001", $bind(this, this.backClick), this.mainCont);
 	this.saveBtn.set_y(this.loadBtn.set_y(i.set_y(l.get_height() - i.get_height() - 40)));
 	var s = 3 * this.saveBtn.get_width() + 60;
-	this.saveBtn.set_x(l.get_width() / 2 - s / 2), this.loadBtn.set_x(l.get_width() / 2 - this.loadBtn.get_width() / 2),
-	i.set_x(l.get_width() / 2 + s / 2 - i.get_width()), e && this.saveBtn.set_alpha(.5),
-	this.mainCont.set_x(this.sWidth / 2 - l.get_width() / 2), this.mainCont.set_y(this.sHeight / 2 - l.get_height() / 2),
-	this.updateSlots(), this.set_curSelection(0), this.setUpdateFuntion($bind(this, this.update)),
-	this.moveThisOnResize = !0, this.moveByResizeCallBack = $bind(this, this.onResize), this.onResize();
+	this.saveBtn.set_x(l.get_width() / 2 - s / 2), this.loadBtn.set_x(l.get_width() / 2 - this.loadBtn.get_width() / 2), i.set_x(l.get_width() / 2 + s / 2 - i.get_width()), e && this.saveBtn.set_alpha(.5), this.mainCont.set_x(this.sWidth / 2 - l.get_width() / 2), this.mainCont.set_y(this.sHeight / 2 - l.get_height() / 2), this.updateSlots(), this.set_curSelection(0), this.setUpdateFuntion($bind(this, this.update)), this.moveThisOnResize = !0, this.moveByResizeCallBack = $bind(this, this.onResize), this.onResize();
 	var o = this.get_y();
 	this.set_y(this.get_y() + this.sHeight), motion_Actuate.tween(this, .27, {
 		y: o
@@ -5908,8 +5886,8 @@ $hxClasses.Sounds = Sounds, Sounds.__name__ = ["Sounds"], Sounds.current = null,
 	mute: function () {
 		if(this.soundsAvailable) {
 			this.muted = !0, 
-			//LocalSaves.setVar("muted", "true");
-			LocalSaves.setVar("muted", "false");
+			LocalSaves.setVar("muted", "true");
+			gradle.mute = true;
 			for(var e = 0; e < this.playingSounds.length;)
 				if(-1 == this.playingSounds[e].endTime) this.playingSounds[e].sound.pause(), e++;
 				else {
@@ -5921,6 +5899,7 @@ $hxClasses.Sounds = Sounds, Sounds.__name__ = ["Sounds"], Sounds.current = null,
 	unMute: function (e) {
 		if(null == e && (e = !0), this.soundsAvailable) {
 			this.muted = !1;
+			gradle.mute = false;
 			for(var t = 0; t < this.playingSounds.length;) - 1 == this.playingSounds[t].endTime && this.playingSounds[t].sound.play(), t++;
 			LocalSaves.setVar("muted", "false")
 		}

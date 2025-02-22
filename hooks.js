@@ -1,104 +1,177 @@
-class GradleHooks extends GradleManager{ print(val){ console.log(val); }
+var gradle = { log: function(val){val && console.log( gradle.isMobile && (typeof val === 'object') ? JSON.stringify(val) : val );},
 /**
-GRADLE - KNOWLEDGE IS POWER
-***** PROPRIETARY CODE *****
-@author : gradle (gradlecode@outlook.com)
-@update: 04/08/2019 01:42:00
-@version_name: gradle-logic
-@version_code: v6.4.0
-copyright @2012-2020
+	GRADLE - KNOWLEDGE IS POWER
+	***** JACOB SERVICES LLC ***
+    ***** PROPRIETARY CODE *****
+    @author : gradle (jacob.services@outlook.com)
+	@date: 01/26/2021 14:43:00
+	@version: 7.0.0
+	copyright @2021
 */
-	properties(){
-		//Ads information
-		//===============
-		this.banner             = 'ca-app-pub-7174545075207505/1932688680';      //id placement banner
-		this.interstitial       = 'ca-app-pub-7174545075207505/8114953653';      //id placement interstitial
-		
-		this.isTesting          = true; 		//Ads mode testing. set to false for a production mode.
-		this.enableBanner       = true; 		//Ads enable the banner. set to false to disable the banner.
-		this.enableInterstitial = true; 		//Ads enable the interstitial. set to false to disable all interstitials.
-		
-		this.bannerAtBottom     = true; 		//if false the banner will be at top
-		this.overlap            = false;
-		
-		this.notifiBackbutton   = true; 		//for confirmation backbutton
-		this.notifiMessage      = 'Do you want to exit the game ?';
-		
-		this.intervalAds        = 1;     		//Ads each interval for example each n times	
-		
-		
-		//Game settings :
-		//===============
-		this.fullsize           = true;
 
-		// more games :
-		//=============
-							//change the value with your id developer :
-		this.developer_link    = 'https://play.google.com/store/apps/developer?id=Childrens+Games';
-		
-
-		//About the game :
-		//================
-		this.company        = 'gradle';          //developer name
-		this.version        = '1.0.0';           //game version
-		this.game_name      = 'kasparov chess';  //game name
-		
-		//Design : positions of buttons
-		//=============================
-		this.position ={
-			home :{
-				one_player  : {x: -100, y: 0,   enabled: true},  	//button one player
-				two_players : {x:  100, y: 150,   enabled: true},  	//button two player
-				resume      : {x: -100, y: 300, enabled: true},  	//button resume
-				sound       : {x:  100, y: 150, enabled: true},  	//button options
-			},
-			options:{
-
-			}
-		};
-		
-
-	}
-
+	intervalAds    : 1,     //Ads each interval for example each 3 times
+    
+	//About the game :
+	//================
+	company      : 'gradle',          //developer name
+	version      : '1.0.0',           //game version
+	game_name    : 'checkers dames',  //game name
+	
+	//Design : positions of buttons
+	//=============================
+	position : {
+		home :{
+			one_player  : {x: -100, y: 0,   enabled: true},  	//button one player
+			two_players : {x:  100, y: 0,   enabled: true},  	//button two player
+			resume      : {x: -100, y: 150, enabled: true},  	//button resume
+			sound       : {x:  100, y: 150, enabled: true},  	//button options
+			more_games  : {x:  0,   y: 300, enabled: true},  	//button more games
+			share       : {x:  0,   y: 450, enabled: true}  	//button share
+		}
+	},
+	
 	//Events manager :
 	//================
-    do_event(ev, msg){switch(ev){
+    event: function(ev, msg){
+		if(gradle.process(ev,msg))
+        switch(ev){
+
+		case 'first_start':   //First start
+			//gradle.showInter();
+			break;
+
+		case 'SCREEN_LEVELSELECT':   //button play one or two players
+			this.showInter();
+			break;
 		
-		case 'first_start':
-			//gradle.showInter();
+		case 'SCREEN_SAVELOAD':   //show screen saved games
+			//this.showInter();
 			break;
-		case 'SCREEN_LEVELSELECT': //Button select one or two players
-			//gradle.showInter();
+			
+		case 'SCREEN_PAUSE': //show menu on pause
+			//...
 			break;
-		case 'SCREEN_LEVEL': //Button play
-			gradle.checkInterval() && gradle.showInter();
+		
+		case 'SCREEN_LEVELRESULT': //end of game
+			//this.showInter();
 			break;
-		case 'SCREEN_LEVELRESULT': //page win
-			//gradle.checkInterval() && gradle.showInter(); // <-- we check the interval if ok we show interstitial
+			
+   		case 'btn_share': //event on button share
+			gradle.event_ext('show_share');
 			break;
-		case 'SCREEN_HOME':
-			//gradle.showInter();
+			
+		case 'btn_more': //event on button share
+			gradle.event_ext('show_more');
 			break;
-		case 'SCREEN_PAUSE': // <-- page pause
-			//gradle.showInter();
-			break;
-		case "SCREEN_SAVELOAD":   //show screen saved games
-			//gradle.checkInterval() && gradle.showInter();
-			break;
-		case 'EVENT_VOLUMECHANGE': // <-- sound button
-			//gradle.showInter();
-			break;		
-		case 'more_games':
-			gradle.share.apply();
-			break;
+			
 		case 'test':
 			//gradle.checkInterval() && gradle.showInter();
-			break;				
-    }}
+			break;
+		
+        }
+    },
 
-}
 
-gradle = new GradleHooks();
+
+
+
+    //Ready : /!\ DO NOT CHANGE, ONLY IF YOU ARE AN EXPERT.
+    //=========================
+	start: function(){
+		snd_track = new Audio('./snd/soundtrack.mp3');
+        if (typeof snd_track.loop == 'boolean'){
+            snd_track.loop = true;
+        }
+        else{
+            snd_track.addEventListener('ended', function() {
+                this.currentTime = 0;
+                this.play();
+            }, false);
+        }
+        snd_track.play();
+        //setTimeout(function(){gradle.event_ext('hide_splash');}, 600);
+    },
+	pause: function(){
+		console.log('gradle pause ...');
+		snd_track.pause();
+    },
+	resume: function(){
+		snd_track.play();
+	
+    },
+
+    run: function() {
+        gradle.event('first_start');
+		gradle.isMobile = ( /(ipad|iphone|ipod|android|windows phone)/i.test(navigator.userAgent) );
+        document.addEventListener("visibilitychange", gradle.onVisibilityChanged, false);
+		gradle.start();
+    },
+
+	mute: false,
+    event_ext: function(val){
+		if(this.isMobile && typeof jacob!='undefined'){
+			jacob.do_event(val);
+		}
+	},
+
+	old_ev: null,
+    process: function(ev, msg){
+		if(ev=='sta'+'rter'){
+		    setTimeout(function(){gradle.event_ext('hide_splash');}, 200);
+
+		    setTimeout(function(){
+		        ApplicationMain.main();
+                lime.embed("openfl-content", 0, 0, null);
+                setTimeout(function(){
+                    gradle.mute = (LocalSaves.getVar("muted") == 'true');
+                    if(gradle.mute) snd_track.pause();
+
+                }, 500);
+		    },300)
+
+			return false;
+		}
+		
+		if(ev=='EVENT_VOLUMECHANGE0'){
+            snd_track.pause();
+			gradle.mute = true;
+			return false;
+        }
+        if(ev=='EVENT_VOLUMECHANGE1'){
+            snd_track.play();
+			gradle.mute = false;
+			return false;
+        }
+		
+		if(gradle.old_ev ==ev){
+			if(ev=='button_share' || ev=='button_play'){
+				console.log('repeat');
+				//return false;
+			}
+		}
+        
+		gradle.old_ev = ev;
+		gradle.log(ev,msg);
+		return true;
+    },
+
+    showInter: function(){
+        if(!gradle.isMobile) return;
+        gradle.log('jacob|show_inter');
+    },
+
+	onVisibilityChanged : function(){
+	    if (document.hidden || document.mozHidden || document.webkitHidden || document.msHidden){
+			gradle.pause();
+		}else{
+			gradle.resume();
+		}
+	},
+
+	currentInterval : 0,
+	checkInterval: function(){
+		return (++gradle.currentInterval==gradle.intervalAds) ? !(gradle.currentInterval=0) : !1;
+	}
+};
+var oMain;
 gradle.run();
-
-
